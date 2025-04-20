@@ -2,6 +2,7 @@ package com.dams.enumformodel;
 
 public enum Status {
 	SCHEDULED,
+	RESCHEDULED,
 	COMPLETED,
 	CANCELED,
 	PENDING,

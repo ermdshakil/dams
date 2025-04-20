@@ -2,10 +2,16 @@ package com.dams.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.dams.enumformodel.Gender;
 import com.dams.enumformodel.Role;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
+
 import lombok.*;
 
 @Entity
@@ -35,7 +41,11 @@ public class Users {
     private String phone;
 
     @Column(name = "password", nullable = false)
-    private String password; // Ensure hashed storage in the service layer
+    private String password; // Should be encrypted in service layer
+
+    @Column(name = "gender")
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "user_role", nullable = false)
@@ -49,26 +59,20 @@ public class Users {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    // One-to-Many relation with Address
+    // Corrected mappedBy to match the field in Address class (assumed "user")
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Address> userAddress;
 
-    // One-to-One relation with Doctors (only for Doctors)
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    // Corrected mappedBy to match the field in Doctors class (assumed "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Doctors doctor;
 
-    // Method to check if the user is a doctor
+    // Utility methods
     public boolean isDoctor() {
         return this.userRole == Role.DOCTOR;
     }
-    // One-to-One relation with Doctors (only for Doctors)
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Patients pacient;
 
-    // Method to check if the user is a Patient
-    public boolean isPatient() {
-        return this.userRole == Role.PATIENT;
-    }
     public boolean isAdmin() {
         return this.userRole == Role.ADMIN;
     }

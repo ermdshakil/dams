@@ -1,18 +1,9 @@
 package com.dams.model;
 
-import java.sql.Timestamp;
-
+import java.time.Instant; // Use Instant instead of Timestamp
 import com.dams.enumformodel.Status;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,38 +14,39 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "payments")
 public class Payments {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="payment_id")
-	private Long paymentId;
-	
-	@OneToOne
-	@JoinColumn(name="appointment_id",referencedColumnName = "appointment_id", nullable = false, unique = true)
-	private Appointments appointment;
-	
-	@Column(name="total_amount")
-	private double payAmount;
-	
-	@Enumerated(EnumType.STRING)
-	@Column(name="status")
-	private Status status;
-	
-	@Column(name="payment_date")
-	private Timestamp payment_date;
-	
-	
-	public boolean isCompleted() {
-		return this.status== Status.COMPLETED;
-		
-	}
-	public boolean isFailed() {
-		return this.status == status.FAILED;
-		
-	}
-	public boolean isPending() {
-		return this.status == status.PENDING;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "payment_id")
+    private Long paymentId;
 
+    @Min(value = 0, message = "Total amount must be greater than or equal to 0")
+    @Column(name = "total_amount")
+    private double totalAmount;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private Status status;
+
+    @Column(name = "payment_date")
+    private Instant paymentDate; // Replacing Timestamp with Instant for better handling of dates/times
+
+    @OneToOne
+    @JoinColumn(name = "appointment_id", nullable = false)
+    private Appointments appointment;
+
+    // Helper methods for status checks
+    public boolean isCompleted() {
+        return Status.COMPLETED == this.status;
+    }
+
+    public boolean isFailed() {
+        return Status.FAILED == this.status;
+    }
+
+    public boolean isPending() {
+        return Status.PENDING == this.status;
+    }
 }

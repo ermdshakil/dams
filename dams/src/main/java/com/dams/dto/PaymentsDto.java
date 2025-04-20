@@ -1,19 +1,19 @@
 package com.dams.dto;
 
-import java.sql.Timestamp;
+import com.dams.enumformodel.Status;
+import lombok.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.time.Instant;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Builder
 public class PaymentsDto {
 
-	private Long paymentId;
-	private Long appointment;
-	private double payAmount;
-	private String status;
-	private Timestamp payment_date;
+    private Long paymentId;
+    private double totalAmount;
+    private Status status;
+    private Instant paymentDate;
+    private Long appointmentId; // Store only the ID of the related appointment for performance reasons
 }

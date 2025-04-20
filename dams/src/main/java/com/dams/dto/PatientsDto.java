@@ -1,29 +1,22 @@
 package com.dams.dto;
 
-import java.util.Date;
+import lombok.*;
+import java.time.LocalDate;
+import java.util.List;
 
-import com.dams.enumformodel.Gender;
-import com.dams.model.Users;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-
-
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Builder
 public class PatientsDto {
-	
-	private Long patientId;
-	private Users user;
-	private Date dob;
-	private Gender gender;
-	private String medicalHistory;
-	//private Appointments appointment;
-    //private List<Reviews> Reviews;
-	
-	
 
+    private Long patientId;
+    private LocalDate dob;
+    private String medicalHistory;
+    private String patientName;
+    private String email;
+    private String phoneNo;
+    private String password;
+    private List<Long> userAddressIds; // Instead of including the whole Address, just the IDs
+    private Boolean hasAppointments;
 }

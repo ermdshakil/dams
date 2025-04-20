@@ -1,29 +1,41 @@
 package com.dams.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import com.dams.enumformodel.Gender;
 import com.dams.enumformodel.Role;
+import com.dams.model.Address;
+import com.dams.model.Doctors;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@ToString
 public class UsersDto {
-	
-	private Long userId;
+
+    private Long userId;
     private String fName;
     private String lName;
     private String email;
-    private String password;
     private String phone;
-    private Role userRole; // Storing role as a String
+    private String password;
+    private Gender gender;
+    private Role userRole;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    //private List<AddressDto> addresses; // Include addresses for the user
-	//private Doctors doctor;
-	    
+    private List<Address> userAddress;
+    private Doctors doctor;
+
+    // Utility methods to indicate user role
+    public boolean isDoctor() {
+        return this.userRole == Role.DOCTOR;
+    }
+
+    public boolean isAdmin() {
+        return this.userRole == Role.ADMIN;
+    }
 }

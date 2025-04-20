@@ -1,19 +1,26 @@
 package com.dams.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class AddressDto {
-	
+
     private Long addressId;
     private String houseNo;
+    private String area;
     private String city;
     private String state;
     private String country;
-    private String zipcode;
-    private Long userId; // Storing only userId instead of the full User object
+    private String zipCode;
+    private Long userId;  // The ID of the associated user
+    private Long patientId;  // The ID of the associated patient
+
 }
