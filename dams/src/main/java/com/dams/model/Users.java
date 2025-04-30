@@ -20,6 +20,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "users")
 public class Users {
 
@@ -48,7 +49,7 @@ public class Users {
     private Gender gender;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "user_role", nullable = false)
+    @Column(name = "role", nullable = false)
     private Role userRole;
 
     @CreationTimestamp

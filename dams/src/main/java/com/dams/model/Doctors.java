@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@DiscriminatorValue("DOCTOR")
 @Entity
 @Getter
 @Setter
@@ -68,6 +69,6 @@ public class Doctors {
         String days = availableDays.stream()
                                    .map(DayOfWeek::name)
                                    .collect(Collectors.joining(", "));
-        return String.format("%s at %s", days, (availableTime != null ? availableTime : "Not set"));
+        return String.format("%s at %s", days, (availableFrom != null ? availableFrom : "Not set"));
     }
 }
