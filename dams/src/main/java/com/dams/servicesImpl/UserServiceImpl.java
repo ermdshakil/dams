@@ -1,5 +1,6 @@
 package com.dams.servicesImpl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,7 +36,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UsersDto updateUser(UsersDto userDto, Long userId) {
-		Users user = userRepo.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "ID", userId));
+		Users user = userRepo.findById(userId)
+				.orElseThrow(() -> new ResourceNotFoundException("User", "ID", userId));
 		user.setFName(userDto.getFName());
 		user.setLName(userDto.getLName());
 		user.setEmail(userDto.getEmail());
@@ -43,11 +45,11 @@ public class UserServiceImpl implements UserService {
 		user.setGender(userDto.getGender());
 		user.setUserRole(userDto.getUserRole());
 		user.setPassword(userDto.getPassword());
-		user.setUpdatedAt(userDto.getUpdatedAt());
+		user.setUpdatedAt(LocalDateTime.now());
 		Users updatedUser = this.userRepo.save(user);
 		return this.modelMapper.map(updatedUser, UsersDto.class);
 	}
-
+	
 	@Override
 	public boolean deleteUserById(Long userId) {
 		Users user = userRepo.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "ID", userId));
@@ -118,4 +120,35 @@ public class UserServiceImpl implements UserService {
 	public Long countAllUsers() {
 		return this.userRepo.count();
 	}
+
+	/*
+	 * @Override public UsersDto updateUserPassword(PasswordChangeRequestDto
+	 * pcRequestDto, Long userId) { Users user =
+	 * userRepo.findById(userId).orElseThrow(() -> new
+	 * ResourceNotFoundException("User", "ID", userId));
+	 * 
+	 * // You should hash the password before saving it //String encodedPassword =
+	 * passwordEncoder.encode(pcRequestDto.getPassword());
+	 * //user.setPassword(encodedPassword);
+	 * user.setPassword(pcRequestDto.getPassword());
+	 * user.setUpdatedAt(LocalDateTime.now());
+	 * 
+	 * Users updatedUser = userRepo.save(user); return modelMapper.map(updatedUser,
+	 * UsersDto.class); }
+	 */
+	
+	/*
+	 * public UsersDto partialUpdate(Long userId, Map<String, Object> updates) {
+	 * Users user = userRepo.findById(userId) .orElseThrow(() -> new
+	 * ResourceNotFoundException("User", "ID", userId));
+	 * 
+	 * updates.forEach((key, value) -> { Field field =
+	 * ReflectionUtils.findField(Users.class, key); if (field != null) {
+	 * field.setAccessible(true); ReflectionUtils.setField(field, user, value); }
+	 * });
+	 * 
+	 * Users updatedUser = userRepo.save(user); return
+	 * modelMapper.toDto(updatedUser); }
+	 */
+
 }

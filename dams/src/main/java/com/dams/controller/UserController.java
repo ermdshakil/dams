@@ -119,5 +119,15 @@ public class UserController {
 		return ResponseEntity.ok(
 				this.userService.countUsersByGenderAndRole(Gender.FEMALE, Role.DOCTOR));
 	}
+	
+	/*
+	 * @PatchMapping("/update/{userId}") public ResponseEntity<UsersDto>
+	 * partiallyUpdateUser(@RequestBody Map<String, Object> updates,
+	 * 
+	 * @PathVariable Long userId) { UsersDto updatedUser =
+	 * userService.partialUpdate(userId, updates); return new
+	 * ResponseEntity<>(updatedUser, HttpStatus.OK); }
+	 */
+
 
 }

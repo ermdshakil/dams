@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.DayOfWeek;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -39,8 +39,11 @@ public class Doctors {
     @Column(name = "available_day")
     private Set<DayOfWeek> availableDays; 
 
-    @Column(name = "available_time")
-    private LocalTime availableTime;
+    @Column(name = "available_from")
+    private LocalDateTime availableFrom;
+    
+    @Column(name = "available_to")
+    private LocalDateTime availableTo;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false, unique = true)

@@ -8,9 +8,12 @@ public interface AddressService {
 
     AddressDto createAddress(AddressDto addressDto);
     AddressDto updateAddress(AddressDto addressDto, Long addressId);
-    int deleteAddress(Long addressId);
+    boolean deleteAddress(Long addressId);
     AddressDto getAddressById(Long addressId);
-    List<AddressDto> getAllAddressByUserId(Long UserId);
     List<AddressDto> getAllAddresses();
+    List<AddressDto> getAllAddressByUserId(Long UserId);
     Long countAddresses();
+    Long countAddressesByUserId(Long userId);
+	List<AddressDto> getAllAddressByPatientId(Long patientId);
+	Long countAddressesByPatientId(Long patientId);
 }

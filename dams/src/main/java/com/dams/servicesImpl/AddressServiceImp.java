@@ -1,6 +1,8 @@
 package com.dams.servicesImpl;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,33 +41,62 @@ public class AddressServiceImp implements AddressService {
 	}
 
 	@Override
-	public int deleteAddress(Long addressId) {
-		// TODO Auto-generated method stub
-		return 0;
+	public boolean deleteAddress(Long addressId) {
+		Address address = this.addressRepo.findById(addressId).orElseThrow(() ->
+		new ResourceNotFoundException("address", "ID", addressId));
+				this.addressRepo.delete(address);
+		return true;
 	}
 
 	@Override
 	public AddressDto getAddressById(Long addressId) {
-		// TODO Auto-generated method stub
-		return null;
+		Address address= this.addressRepo.findById(addressId).orElseThrow(()->
+		new  ResourceNotFoundException("address", "ID", addressId));
+		return this.modalMapper.map(address, AddressDto.class);
 	}
 
 	@Override
 	public List<AddressDto> getAllAddresses() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Address> addresses = this.addressRepo.findAll();
+		return addresses.stream().map(address -> 
+		this.modalMapper.map(address, AddressDto.class)).collect(Collectors.toList());
+		//return (List<AddressDto>) this.modalMapper.map(allAddress, AddressDto.class);
 	}
 
 	@Override
 	public Long countAddresses() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.addressRepo.count();
 	}
 
 	@Override
 	public List<AddressDto> getAllAddressByUserId(Long UserId) {
-		// TODO Auto-generated method stub
-		return null;
+		@SuppressWarnings("unchecked")
+		List<Address> addresses = (List<Address>) this.addressRepo.findAddressByUserId(UserId)
+				.orElseThrow(()-> new ResourceNotFoundException("Address", "ID", UserId));
+		return addresses.stream().map(address ->
+		this.modalMapper.map(addresses, AddressDto.class)).collect(Collectors.toList());
+	}
+	@Override
+	public List<AddressDto> getAllAddressByPatientId(Long patientId) {
+		@SuppressWarnings("unchecked")
+		List<Address> addresses = (List<Address>) this.addressRepo.findAddressByPatientId(patientId)
+				.orElseThrow(()-> new ResourceNotFoundException("Address", "ID", patientId));
+		return addresses.stream().map(address ->
+		this.modalMapper.map(addresses, AddressDto.class)).collect(Collectors.toList());
+	}
+	@Override
+	public Long countAddressesByUserId(Long userId) {
+		@SuppressWarnings("unchecked")
+		List<Address> addresses = (List<Address>) this.addressRepo.findAddressByUserId(userId)
+				.orElseThrow(()-> new ResourceNotFoundException("Address", "ID", userId));
+		return (long) addresses.size();
+	}
+	@Override
+	public Long countAddressesByPatientId(Long patientId) {
+		@SuppressWarnings("unchecked")
+		List<Address> addresses = (List<Address>) this.addressRepo.findAddressByPatientId(patientId)
+				.orElseThrow(()-> new ResourceNotFoundException("Address", "ID", patientId));
+		return (long) addresses.size();
 	}
 
 }

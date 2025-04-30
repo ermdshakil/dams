@@ -14,7 +14,7 @@
  * import com.dams.repository.UserRepository; import
  * com.dams.services.UserService;
  * 
- * @Service public class UserServiceImpl implements UserService {
+ * @Service public class UserServiceImpl {
  * 
  * @Autowired private UserRepository userRepo;
  * 

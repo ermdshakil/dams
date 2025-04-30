@@ -7,12 +7,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.dams.dto.AddressDto;
 import com.dams.model.Address;
 
 public interface AddressRepo extends JpaRepository<Address, Long> {
-
-    List<Address> findByUserUserId(Long userId);
-    List<Address> findByPatientPatientId(Long patientId);
+	@Query("SELECT a FROM Address a WHERE a.user = :user")
+	Optional<Address> findAddressByUserId(Long user);
+	@Query("SELECT a FROM Address a WHERE a.patient = :patient")
+	Optional<Address> findAddressByPatientId(Long patient);
 	@Query("SELECT a FROM Address a WHERE a.city = :city")
     List<Address> findByCity(String city);
     @Query("SELECT a FROM Address a WHERE a.country = :country")

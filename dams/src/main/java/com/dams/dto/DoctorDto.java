@@ -1,8 +1,11 @@
 package com.dams.dto;
 
-import lombok.*;
-import java.time.LocalTime;
 import java.util.Set;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
@@ -15,6 +18,7 @@ public class DoctorDto {
     private Integer experience;
     private String licenseNumber;
     private Set<String> availableDays; // We will use String for display purposes (e.g., "MONDAY", "TUESDAY")
-    private LocalTime availableTime;
+    private String availableFrom;
+    private String availableTo;
     private String fullName;
 }

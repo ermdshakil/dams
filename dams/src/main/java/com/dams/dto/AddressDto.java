@@ -20,7 +20,7 @@ public class AddressDto {
     private String state;
     private String country;
     private String zipCode;
-    private Long userId;  // The ID of the associated user
-    private Long patientId;  // The ID of the associated patient
+    private Long user;  // The ID of the associated user
+    private Long patient;  //The ID of the associated patient
 
 }

@@ -10,11 +10,11 @@ import com.dams.model.Doctors;
 
 import lombok.*;
 
+@Data
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class UsersDto {
 
     private Long userId;
@@ -30,6 +30,15 @@ public class UsersDto {
     private List<Address> userAddress;
     private Doctors doctor;
 
+    public void SetCreatedAt() {
+        this.createdAt = LocalDateTime.now();
+    }
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+    public void SetUpdatedAt() {
+        this.updatedAt = LocalDateTime.now();
+    }
     // Utility methods to indicate user role
     public boolean isDoctor() {
         return this.userRole == Role.DOCTOR;

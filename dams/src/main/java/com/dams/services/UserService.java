@@ -2,6 +2,7 @@ package com.dams.services;
 
 import java.util.List;
 
+import com.dams.dto.PasswordChangeRequestDto;
 import com.dams.dto.UsersDto;
 import com.dams.enumformodel.Gender;
 import com.dams.enumformodel.Role;
@@ -13,7 +14,7 @@ public interface UserService {
 	UsersDto createUser(UsersDto userDto);
 
 	UsersDto updateUser(UsersDto userDto, Long userId);
-
+	//UsersDto updateUserPassword(PasswordChangeRequestDto pcRequestDto, Long userId);
 	UsersDto getUserById(Long id);
 
 	UsersDto getUserByEmail(String email);
